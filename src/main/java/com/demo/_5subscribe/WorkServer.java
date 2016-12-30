@@ -6,7 +6,7 @@ import org.I0Itec.zkclient.exception.ZkNoNodeException;
 
 import com.alibaba.fastjson.JSON;
 
-public class WorkServer {
+public class WorkServer extends Thread {
 
 	private ZkClient zkClient;
 	private String configPath;
@@ -72,6 +72,11 @@ public class WorkServer {
 
 	private void updateConfig(ServerConfig serverConfig) {
 		this.serverConfig = serverConfig;
+	}
+
+	@Override
+	public void run() {
+		startServer();
 	}
 
 }

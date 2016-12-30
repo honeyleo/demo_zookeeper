@@ -8,6 +8,8 @@ import java.util.List;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.serialize.BytesPushThroughSerializer;
 
+import com.demo.Constants;
+
 /**
  * 数据的发布和订阅
  * 负责驱动WordServer和ManageServer
@@ -19,9 +21,6 @@ public class SubscribeZkClient {
 
 	/** 客户端数量 */
 	private static final int CLIENT_QTY = 5;
-
-	/** Zookeeper服务器地址 */
-	private static final String ZOOKEEPER_SERVER = "192.168.10.5:2181";
 
 	/** 配置configs节点 */
 	private static final String CONFIG_PATH = "/configs";
@@ -43,13 +42,13 @@ public class SubscribeZkClient {
 			initConfig.setDbUser("root");
 
 			// 启动Manage Server
-			ZkClient clientManage = new ZkClient(ZOOKEEPER_SERVER, 5000, 5000, new BytesPushThroughSerializer());
+			ZkClient clientManage = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new BytesPushThroughSerializer());
 			manageServer = new ManageServer(SERVERS_PATH, COMMAND_PATH, CONFIG_PATH, clientManage, initConfig);
-			manageServer.startServer();
+			manageServer.start();
 
 			// 启动Work Server
 			for (int i = 0; i < CLIENT_QTY; ++i) {
-				ZkClient client = new ZkClient(ZOOKEEPER_SERVER, 5000, 5000, new BytesPushThroughSerializer());
+				ZkClient client = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new BytesPushThroughSerializer());
 				clients.add(client);
 				
 				ServerData serverData = new ServerData();
@@ -60,7 +59,7 @@ public class SubscribeZkClient {
 				WorkServer workServer = new WorkServer(CONFIG_PATH, SERVERS_PATH, serverData, client, initConfig);
 				workServers.add(workServer);
 				
-				workServer.startServer();
+				workServer.start();
 
 			}
 			

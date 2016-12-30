@@ -39,6 +39,9 @@ public class ServerData implements Serializable, Comparable<ServerData> {
 		this.port = port;
 	}
 
+	public String node() {
+		return host + ":" + port;
+	}
 	@Override
 	public String toString() {
 		return "ServerData [balance=" + balance + ", host=" + host + ", port=" + port + "]";

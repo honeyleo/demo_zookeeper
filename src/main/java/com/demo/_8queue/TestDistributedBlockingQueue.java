@@ -4,7 +4,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.demo.Constants;
 import com.demo._8queue.model.User;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.serialize.SerializableSerializer;
 
@@ -21,7 +23,7 @@ public class TestDistributedBlockingQueue {
         ScheduledExecutorService delayExector = Executors.newScheduledThreadPool(1);
         int delayTime = 5;
 
-        ZkClient zkClient = new ZkClient("192.168.10.5:2181", 5000, 5000, new SerializableSerializer());
+        ZkClient zkClient = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new SerializableSerializer());
         final DistributedBlockingQueue<User> queue = new DistributedBlockingQueue<>(zkClient, "/queue");
 
         final User user1 = new User();

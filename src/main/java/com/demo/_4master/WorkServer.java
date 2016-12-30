@@ -17,7 +17,7 @@ import org.apache.zookeeper.CreateMode;
  *
  * @author jerome_s@qq.com
  */
-public class WorkServer {
+public class WorkServer implements Runnable {
 
 	/** 服务器是否在运行 */
 	private volatile boolean running = false;
@@ -199,6 +199,15 @@ public class WorkServer {
 
 	public void setZkClient(ZkClient zkClient) {
 		this.zkClient = zkClient;
+	}
+
+	@Override
+	public void run() {
+		try {
+			startServer();
+		} catch(Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 }

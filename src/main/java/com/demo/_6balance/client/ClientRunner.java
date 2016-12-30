@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.demo.Constants;
 import com.demo._6balance.server.ServerData;
 
 /**
@@ -16,8 +17,6 @@ public class ClientRunner {
 
 	/** 启动服务器的个数 */
 	private static final int CLIENT_QTY = 3;
-	/** Zookeeper服务器地址 */
-	private static final String ZOOKEEPER_SERVER = "192.168.10.5:2181";
 	/** Zookeeper服务器注册的节点 */
 	private static final String SERVERS_PATH = "/servers";
 
@@ -25,7 +24,7 @@ public class ClientRunner {
 
 		List<Thread> threadList = new ArrayList<Thread>(CLIENT_QTY);
 		final List<Client> clientList = new ArrayList<Client>();
-		final BalanceProvider<ServerData> balanceProvider = new DefaultBalanceProvider(ZOOKEEPER_SERVER, SERVERS_PATH);
+		final BalanceProvider<ServerData> balanceProvider = new DefaultBalanceProvider(Constants.ZOOKEEPER_ADDRESS, SERVERS_PATH);
 
 		try {
 			for (int i = 0; i < CLIENT_QTY; i++) {

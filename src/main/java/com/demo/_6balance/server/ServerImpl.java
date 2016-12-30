@@ -68,7 +68,7 @@ public class ServerImpl implements Server {
 	 * @throws Exception
 	 */
 	private void initRunning() throws Exception {
-		String mePath = serversPath.concat("/").concat(serverData.getPort().toString());
+		String mePath = serversPath.concat("/").concat(serverData.node());
 
 		// 注册到zookeeper
 		registProvider.regist(new ZooKeeperRegistContext(mePath, zkClient, serverData));

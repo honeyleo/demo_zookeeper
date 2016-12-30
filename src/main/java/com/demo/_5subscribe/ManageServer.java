@@ -10,7 +10,7 @@ import org.I0Itec.zkclient.exception.ZkNodeExistsException;
 
 import com.alibaba.fastjson.JSON;
 
-public class ManageServer {
+public class ManageServer extends Thread {
 
 	private String serversPath;
 	private String commandPath;
@@ -116,5 +116,10 @@ public class ManageServer {
 		System.out.println("stop manage server.");
 		zkClient.unsubscribeChildChanges(serversPath, childListener);
 		zkClient.unsubscribeDataChanges(commandPath, dataListener);
+	}
+
+	@Override
+	public void run() {
+		startServer();
 	}
 }

@@ -3,6 +3,8 @@ package com.demo._6balance.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.demo.Constants;
+
 /**
  * 调度类
  * 
@@ -12,8 +14,6 @@ public class ServerRunner {
 
 	/** 服务器个数 */
 	private static final int SERVER_QTY = 2;
-	/** Zookeeper服务器地址 */
-	private static final String ZOOKEEPER_SERVER = "192.168.10.5:2181";
 	/** 服务注册节点 */
 	private static final String SERVERS_PATH = "/servers";
 
@@ -30,8 +30,8 @@ public class ServerRunner {
 					ServerData serverData = new ServerData();
 					serverData.setBalance(0);
 					serverData.setHost("127.0.0.1");
-					serverData.setPort(6000 + count);
-					Server server = new ServerImpl(ZOOKEEPER_SERVER, SERVERS_PATH, serverData);
+					serverData.setPort(7000 + count);
+					Server server = new ServerImpl(Constants.ZOOKEEPER_ADDRESS, SERVERS_PATH, serverData);
 					server.bind();
 				}
 			});

@@ -3,6 +3,8 @@ package com.demo._7lock;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.serialize.BytesPushThroughSerializer;
 
+import com.demo.Constants;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,10 +19,10 @@ public class TestLock {
 
         // 需要手动创建节点 /locker
 
-        ZkClient zkClient1 = new ZkClient("192.168.10.5:2181", 5000, 5000, new BytesPushThroughSerializer());
+        ZkClient zkClient1 = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new BytesPushThroughSerializer());
         LockImpl lock1 = new LockImpl(zkClient1, "/locker");
 
-        ZkClient zkClient2 = new ZkClient("192.168.10.5:2181", 5000, 5000, new BytesPushThroughSerializer());
+        ZkClient zkClient2 = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new BytesPushThroughSerializer());
         final LockImpl lock2 = new LockImpl(zkClient2, "/locker");
 
         try {

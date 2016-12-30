@@ -6,6 +6,8 @@ import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.serialize.SerializableSerializer;
 
+import com.demo.Constants;
+
 /**
  * 订阅节点的子节点变化（可以监听不存在的节点当他创建的时候接收到通知）
  *
@@ -14,7 +16,7 @@ import org.I0Itec.zkclient.serialize.SerializableSerializer;
 public class _8SubscribeChildChanges {
 
 	public static void main(String[] args) throws InterruptedException {
-		ZkClient zc = new ZkClient("192.168.10.5:2181", 10000, 10000, new SerializableSerializer());
+		ZkClient zc = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 10000, 10000, new SerializableSerializer());
 		System.out.println("conneted ok!");
 		zc.subscribeChildChanges("/node2", new ZkChildListener());
 		Thread.sleep(Integer.MAX_VALUE);

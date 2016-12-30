@@ -8,6 +8,8 @@ import java.util.List;
 import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.serialize.SerializableSerializer;
 
+import com.demo.Constants;
+
 /**
  * master选举调度器，用来启动和停止Worker Server
  *
@@ -18,9 +20,6 @@ public class LeaderSelectorZkClient {
 	/** 启动的服务个数 */
 	private static final int CLIENT_QTY = 10;
 	
-	/** zookeeper服务器的地址 */
-	private static final String ZOOKEEPER_SERVER = "192.168.10.5:2181";
-
 	public static void main(String[] args) throws Exception {
 		// 保存所有zkClient的列表
 		List<ZkClient> clients = new ArrayList<>();
@@ -30,7 +29,7 @@ public class LeaderSelectorZkClient {
 		try {
 			for (int i = 0; i < CLIENT_QTY; ++i) {
 				// 创建zkClient
-				ZkClient client = new ZkClient(ZOOKEEPER_SERVER, 5000, 5000, new SerializableSerializer());
+				ZkClient client = new ZkClient(Constants.ZOOKEEPER_ADDRESS, 5000, 5000, new SerializableSerializer());
 				clients.add(client);
 				
 				// 创建serverData
@@ -43,7 +42,7 @@ public class LeaderSelectorZkClient {
 				workServer.setZkClient(client);
 				workServers.add(workServer);
 				
-				workServer.startServer();
+				new Thread(workServer).start();
 			}
 
 			System.out.println("敲回车键退出！\n");
